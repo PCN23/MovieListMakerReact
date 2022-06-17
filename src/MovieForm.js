@@ -47,7 +47,18 @@ export default function MovieForm({
       </label>
       <label>
         Year Released
-        <input required value={yearForm} onChange={e => setYearForm(e.target.value)}/>
+        <input required value={yearForm} type='number' onChange={e => setYearForm(e.target.value)}/>
+      </label>
+      <label>
+        Color:
+        <select>
+          <option>Blue</option>
+          <option>Green</option>
+          <option>Salmon</option>
+          <option>Pink</option>
+
+        </select>
+        <button>Submit</button>
       </label>
 
 

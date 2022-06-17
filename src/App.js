@@ -6,8 +6,8 @@ import { useMovieForm } from './useMovieForm.js';
 
 
 function App() {
-  const [allMovies, setAllMovies] = useState('');
-  const [filteredMovies, setFilteredMovies] = useState('');
+  const [allMovies, setAllMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(allMovies);
   const [movieFormYearReleased, setMovieFromYearReleased] = useState('');
   const [movieFormDirector, setMovieFormDirector] = useState('');
   const [movieTitle, setMovieTitle] = useState('');
@@ -21,21 +21,23 @@ function App() {
   } = useMovieForm();
 
 function addMovie(newMovie) {
-  const updatedMovies
+  const updatedMovies = [...allMovies , newMovie];
+
+  setAllMovies(updatedMovies);
 }
 
   return (
     <div className="App">
       <div className='current-movie-section'>
         <MovieForm 
-          titleForm={setTitleForm}
           setTitleForm={setTitleForm}
-          directorForm={directorForm}
           setDirectorForm={setDirectorForm}
-          yearForm={yearForm}
           setYearForm={setYearForm}
-          colorForm={colorForm}
           setColorForm={setColorForm}
+          titleForm={setTitleForm}
+          directorForm={directorForm}
+          yearForm={yearForm}
+          colorForm={colorForm}
           addMovie={addMovie}
         />
         {
@@ -48,7 +50,7 @@ function addMovie(newMovie) {
         }
       </div>
       <p>Filter movies</p>
-      <input value={} onChange={(e) => setFilteredMovies(e.target.value)}/>
+      <input value={currentFilter} onChange={(e) => setFilteredMovies(e.target.value)}/>
       <MovieList movies={}/>
     </div>
   );
