@@ -1,8 +1,9 @@
-import { useEf, useState } from 'react.js';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import Movie from './Movie.js';
 import MovieList from './MovieList.js';
-import { useMovieForm } from './useMovieForm.js';
+import MovieForm from './MovieForm.js';
 
 
 function App() {
@@ -13,45 +14,57 @@ function App() {
   const [movieTitle, setMovieTitle] = useState('');
   const [movieFormColor, setMovieFormColor] = useState('');
 
-  const {
-    titleForm, setTitleForm,
-    directorForm, setDirectorForm,
-    yearForm, setYearForm,
-    colorForm, setColorForm,
-  } = useMovieForm();
 
-function addMovie(newMovie) {
-  const updatedMovies = [...allMovies , newMovie];
+  useEffect(() => {
+    const filteredMovies = allMovies.filter(movie => 
+      movie.title.includes(setMovieTitle));
 
-  setAllMovies(updatedMovies);
-}
+    setFilteredMovies(filteredMovies);
+  }, [setMovieTitle, allMovies]);
+
+
+  function deleteMovie(title) {
+    const index = allMovies.findindex(movie => movie.title === title);
+    allMovies.splice(index, 1);
+
+    setFilteredMovies('');
+    setAllMovies([...allMovies]);
+  }
+
+
+  function addMovie(newMovie) {
+    const updatedMovies = [...allMovies, newMovie];
+
+    setAllMovies(updatedMovies);
+  }
+
 
   return (
     <div className="App">
       <div className='current-movie-section'>
         <MovieForm 
-          setTitleForm={setTitleForm}
-          setDirectorForm={setDirectorForm}
-          setYearForm={setYearForm}
-          setColorForm={setColorForm}
-          titleForm={setTitleForm}
-          directorForm={directorForm}
-          yearForm={yearForm}
-          colorForm={colorForm}
+          setMovieTitle={setMovieTitle}
+          setDirectorForm={setMovieFormDirector}
+          setYearForm={setMovieFromYearReleased}
+          setColorForm={setMovieFormColor}
           addMovie={addMovie}
         />
         {
-          titleForm && <Movie
-            title={titleForm}
-            director={directorForm}
-            year={yearForm}
-            color={colorForm}
+          movieTitle && <Movie
+            title={movieTitle}
+            director={movieFormDirector}
+            year={movieFormYearReleased}
+            color={movieFormColor}
           />
         }
       </div>
       <p>Filter movies</p>
-      <input value={currentFilter} onChange={(e) => setFilteredMovies(e.target.value)}/>
-      <MovieList movies={}/>
+      <input value={setMovieTitle} onChange={(e) => setFilteredMovies(e.target.value)}/>
+      <MovieList movies={
+        filteredMovies.length ? filteredMovies : allMovies 
+      }
+      deleteMovie={deleteMovie}
+      />
     </div>
   );
 }

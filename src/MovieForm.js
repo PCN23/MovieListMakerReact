@@ -3,32 +3,32 @@ import React from 'react';
 
 
 export default function MovieForm({ 
-  titleForm, 
-  setTitleForm, 
-  directorForm, 
-  setDirectorForm, 
-  yearForm, 
-  setYearForm, 
-  ColorForm, 
-  setColorForm, 
-  addMovie
+  setMovieTitle,
+  setMovieFormColor,
+  setMovieFormDirector,
+  setMovieFormYearReleased, 
+  movieFormDirector,
+  movieFormColor,
+  movieFormYearReleased,
+  movieTitle,
+  submitMovie
 }) {
 
   function handleSubmit(e) {
     e.preventDefault();
     const movie = {
-      title: titleForm,
-      director: directorForm,
-      year: yearForm,
-      color: ColorForm,
+      title: movieTitle,
+      director: movieFormDirector,
+      year: movieFormYearReleased,
+      color: movieFormColor,
     };
 
-    addMovie(movie);
+    submitMovie(movie);
 
-    setTitleForm('');
-    setDirectorForm('');
-    setYearForm('');
-    setColorForm('blue');
+    setMovieTitle('');
+    setMovieFormDirector('');
+    setMovieFormYearReleased('');
+    setMovieFormColor('blue');
 
 
 
@@ -39,15 +39,15 @@ export default function MovieForm({
     <form onSubmit={handleSubmit}>
       <label>
         Title
-        <input required value={titleForm} onChange={e => setTitleForm(e.target.value)}/>
+        <input required onChange={e => setMovieTitle(e.target.value)}/>
       </label>
       <label>
         Director
-        <input required value={directorForm} onChange={e => setDirectorForm(e.target.value)}/>
+        <input required onChange={e => setMovieFormDirector(e.target.value)}/>
       </label>
       <label>
         Year Released
-        <input required value={yearForm} type='number' onChange={e => setYearForm(e.target.value)}/>
+        <input required type='number' onChange={e => setMovieFormYearReleased(e.target.value)}/>
       </label>
       <label>
         Color:
