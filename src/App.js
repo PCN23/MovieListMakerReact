@@ -9,33 +9,48 @@ import MovieForm from './MovieForm.js';
 function App() {
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState(allMovies);
-  const [movieFormYearReleased, setMovieFromYearReleased] = useState('');
+  const [movieFormYearReleased, setMovieFormYearReleased] = useState('');
   const [movieFormDirector, setMovieFormDirector] = useState('');
   const [movieTitle, setMovieTitle] = useState('');
   const [movieFormColor, setMovieFormColor] = useState('');
-
+  const [movieFilter, setMovieFilter] = useState('');
 
   useEffect(() => {
-    const filteredMovies = allMovies.filter(movie => 
-      movie.title.includes(setMovieTitle));
+    setFilteredMovies(allMovies);
+    setMovieFilter('');
+  }, [allMovies]);
 
-    setFilteredMovies(filteredMovies);
-  }, [setMovieTitle, allMovies]);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const movie = {
+      title: movieTitle,
+      director: movieFormDirector,
+      year: movieFormYearReleased,
+      color: movieFormColor,
+    };
 
+    const updatedMovies = [...allMovies, movie];
+
+    setAllMovies(updatedMovies);
+    
+    setMovieTitle('');
+    setMovieFormDirector('');
+    setMovieFormYearReleased('');
+    setMovieFormColor('');
+
+  }
 
   function deleteMovie(title) {
-    const index = allMovies.findindex(movie => movie.title === title);
+    const index = allMovies.findIndex(movie => movie.title === title);
     allMovies.splice(index, 1);
 
-    setFilteredMovies('');
     setAllMovies([...allMovies]);
   }
 
-
-  function addMovie(newMovie) {
-    const updatedMovies = [...allMovies, newMovie];
-
-    setAllMovies(updatedMovies);
+  function handleFilter(movieFilter) {
+    const searchedMovie = allMovies.filter(movie => 
+      movie.title.includes(movieFilter));
+    setFilteredMovies(searchedMovie);
   }
 
 
@@ -44,13 +59,13 @@ function App() {
       <div className='current-movie-section'>
         <MovieForm 
           setMovieTitle={setMovieTitle}
-          setDirectorForm={setMovieFormDirector}
-          setYearForm={setMovieFromYearReleased}
-          setColorForm={setMovieFormColor}
-          addMovie={addMovie}
+          setMovieFormDirector={setMovieFormDirector}
+          setMovieFormYearReleased={setMovieFormYearReleased}
+          setMovieFormColor={setMovieFormColor}
+          handleSubmit={handleSubmit}
         />
         {
-          movieTitle && <Movie
+          <Movie
             title={movieTitle}
             director={movieFormDirector}
             year={movieFormYearReleased}
@@ -59,7 +74,7 @@ function App() {
         }
       </div>
       <p>Filter movies</p>
-      <input value={setMovieTitle} onChange={(e) => setFilteredMovies(e.target.value)}/>
+      <input onChange={(e) => handleFilter(e.target.value)}/>
       <MovieList movies={
         filteredMovies.length ? filteredMovies : allMovies 
       }
