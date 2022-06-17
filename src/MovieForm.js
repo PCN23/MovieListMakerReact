@@ -2,35 +2,52 @@ import React from 'react';
 
 
 
-export default function MovieForm({ titleForm, setTitleForm, directorForm,  setDirectorForm, yearForm, setYearForm, ColorForm, setColorForm, addMovie}) {
+export default function MovieForm({ 
+  titleForm, 
+  setTitleForm, 
+  directorForm, 
+  setDirectorForm, 
+  yearForm, 
+  setYearForm, 
+  ColorForm, 
+  setColorForm, 
+  addMovie
+}) {
 
-function handleSubmit(e) {
-  e.preventDefault();
-  const movie = {
-    title: titleForm,
-    director: directorForm,
-    year: yearForm,
-    color: ColorForm,
-  };
+  function handleSubmit(e) {
+    e.preventDefault();
+    const movie = {
+      title: titleForm,
+      director: directorForm,
+      year: yearForm,
+      color: ColorForm,
+    };
+
+    addMovie(movie);
+
+    setTitleForm('');
+    setDirectorForm('');
+    setYearForm('');
+    setColorForm('blue');
 
 
 
-}
+  }
 
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
         Title
-        <input required value={} onChange={e => (e.target.value)}/>
+        <input required value={titleForm} onChange={e => setTitleForm(e.target.value)}/>
       </label>
       <label>
         Director
-        <input required value={} onChange={e => (e.target.value)}/>
+        <input required value={directorForm} onChange={e => setDirectorForm(e.target.value)}/>
       </label>
       <label>
         Year Released
-        <input required value={} onChange={e => (e.target.value)}/>
+        <input required value={yearForm} onChange={e => setYearForm(e.target.value)}/>
       </label>
 
 
