@@ -1,4 +1,4 @@
-import { useState } from 'react.js';
+import { useEf, useState } from 'react.js';
 import './App.css';
 import Movie from './Movie.js';
 import MovieList from './MovieList.js';
@@ -20,7 +20,9 @@ function App() {
     colorForm, setColorForm,
   } = useMovieForm();
 
-
+function addMovie(newMovie) {
+  const updatedMovies
+}
 
   return (
     <div className="App">
