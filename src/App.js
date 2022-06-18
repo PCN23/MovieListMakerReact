@@ -13,7 +13,6 @@ function App() {
   const [movieFormDirector, setMovieFormDirector] = useState('');
   const [movieTitle, setMovieTitle] = useState('');
   const [movieFormColor, setMovieFormColor] = useState('');
-  console.log(movieTitle);
   useEffect(() => {
     setFilteredMovies(allMovies);
   }, [allMovies]);
@@ -74,11 +73,13 @@ function App() {
           />
         }
       </div>
-      <p>Filter movies</p>
-      <input onChange={(e) => handleFilter(e.target.value)}/>
-      <MovieList movies={filteredMovies}
-        deleteMovie={deleteMovie}
-      />
+      <div className='title'>
+        <p>Filter movies</p>
+        <input onChange={(e) => handleFilter(e.target.value)}/>
+        <MovieList movies={filteredMovies}
+          deleteMovie={deleteMovie}
+        />
+      </div>
     </div>
   );
 }
