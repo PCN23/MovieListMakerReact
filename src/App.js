@@ -13,11 +13,9 @@ function App() {
   const [movieFormDirector, setMovieFormDirector] = useState('');
   const [movieTitle, setMovieTitle] = useState('');
   const [movieFormColor, setMovieFormColor] = useState('');
-  const [movieFilter, setMovieFilter] = useState('');
-
+  console.log(movieTitle);
   useEffect(() => {
     setFilteredMovies(allMovies);
-    setMovieFilter('');
   }, [allMovies]);
 
   function handleSubmit(e) {
@@ -32,7 +30,6 @@ function App() {
     const updatedMovies = [...allMovies, movie];
 
     setAllMovies(updatedMovies);
-    
     setMovieTitle('');
     setMovieFormDirector('');
     setMovieFormYearReleased('');
@@ -47,9 +44,9 @@ function App() {
     setAllMovies([...allMovies]);
   }
 
-  function handleFilter(movieFilter) {
+  function handleFilter(search) {
     const searchedMovie = allMovies.filter(movie => 
-      movie.title.includes(movieFilter));
+      movie.title.includes(search));
     setFilteredMovies(searchedMovie);
   }
 
@@ -63,6 +60,10 @@ function App() {
           setMovieFormYearReleased={setMovieFormYearReleased}
           setMovieFormColor={setMovieFormColor}
           handleSubmit={handleSubmit}
+          movieFormDirector={movieFormDirector}
+          movieFormColor={movieFormColor}
+          movieFormYearReleased={movieFormYearReleased}
+          movieTitle={movieTitle}
         />
         {
           <Movie
@@ -75,10 +76,8 @@ function App() {
       </div>
       <p>Filter movies</p>
       <input onChange={(e) => handleFilter(e.target.value)}/>
-      <MovieList movies={
-        filteredMovies.length ? filteredMovies : allMovies 
-      }
-      deleteMovie={deleteMovie}
+      <MovieList movies={filteredMovies}
+        deleteMovie={deleteMovie}
       />
     </div>
   );
