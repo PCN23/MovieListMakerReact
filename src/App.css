@@ -1,5 +1,23 @@
 .App {
   text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border: 3px solid black;
+  height: 500px;
+  width: 300px;
+}
+#current-movie-section {
+  border: 19px solid red;
+}
+.title {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction:column;
+  border: 3px solid black;
+  height: 500px;
+  width: 280px;
 }
 
 .App-logo {
